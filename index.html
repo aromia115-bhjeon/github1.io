@@ -3,360 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Psychology Lab</title>
+    <title>Video Psychology Lab | 영상심리학 연구실</title>
     <style>
-        /* [1. CSS: 스타일링] */
+        /* [CSS] 시네마틱 & 낭만주의 미학 스타일링 */
         :root {
-            --bg-color: #0a0a0a;
-            --accent-color: #d4af37; /* 시네마틱 골드 */
-            --text-color: #e0e0e0;
-            --nav-bg: rgba(10, 10, 10, 0.95);
+            --bg-dark: #ffffff;
+            --card-bg: #f8f9fa;
+            --accent-gold: #b8860b; /* 낭만주의적 골드 포인트 */
+            --text-main: #222222;
+            --text-dim: #666666;
+            --border-color: #2a2a2a;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Georgia', serif;
-            line-height: 1.6;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Times New Roman', 'Noto Serif KR', serif; /* 인문학적 감성 */
+            line-height: 1.7;
         }
 
-        a {
-            color: var(--text-color);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        a:hover {
-            color: var(--accent-color);
-        }
-
+        /* 내비게이션 및 중첩 메뉴 */
         nav {
-            background: var(--nav-bg);
-            border-bottom: 1px solid var(--accent-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 1px solid var(--accent-gold);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: center;
         }
 
         .main-menu {
-            display: flex;
-            list-style: none;
-            padding: 1rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            display: flex; list-style: none;
         }
 
         .main-menu > li {
-            position: relative;
-            margin-right: 3rem;
+            position: relative; padding: 1.2rem 2rem;
+            cursor: pointer; font-weight: bold;
         }
 
-        .main-menu > li > a {
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
+        .main-menu > li:hover { color: var(--accent-gold); }
 
         .sub-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #1a1a1a;
-            padding: 0.5rem 0;
-            border: 1px solid var(--accent-color);
-            min-width: 200px;
-            list-style: none;
+            display: none; position: absolute; top: 100%; left: 0;
+            background: var(--card-bg); border: 1px solid var(--accent-gold);
+            list-style: none; min-width: 180px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
-        .main-menu > li:hover .sub-menu {
-            display: block;
-        }
+        .main-menu > li:hover .sub-menu { display: block; }
 
         .sub-menu li {
-            padding: 0.5rem 1rem;
+            padding: 0.8rem 1.2rem; border-bottom: 1px solid #222;
         }
 
-        .hero-section {
-            height: 60vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8));
-            border-bottom: 1px solid #333;
+        .sub-menu li a {
+            color: var(--text-main); text-decoration: none; font-size: 0.9rem;
+            display: block; transition: 0.3s;
         }
 
-        .hero-section h1 {
-            color: var(--accent-color);
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        .sub-menu li a:hover { color: var(--accent-gold); padding-left: 5px; }
+
+        /* 히어로 섹션 */
+        .hero {
+            height: 50vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=2059');
+            background-size: cover; background-position: center;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        section {
-            max-width: 1000px;
-            margin: 4rem auto;
-            padding: 2rem;
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 8px;
+        .hero h1 { font-size: 3.5rem; color: var(--accent-gold); margin-bottom: 10px; letter-spacing: 2px; }
+        .hero p { font-size: 1.2rem; color: var(--text-dim); }
+
+        /* 컨테이너 */
+        .container { max-width: 900px; margin: 4rem auto; padding: 0 20px; }
+
+        section { margin-bottom: 5rem; }
+
+        h2 { font-size: 2rem; color: var(--accent-gold); margin-bottom: 2rem; border-bottom: 1px solid var(--accent-gold); padding-bottom: 10px; }
+
+        /* 게시판 폼 */
+        .board-form { background: var(--card-bg); padding: 2rem; border-radius: 8px; margin-bottom: 2rem; }
+        
+        input[type="text"], textarea {
+            width: 100%; padding: 1rem; margin-bottom: 1rem;
+            background: #1a1a1a; border: 1px solid var(--border-color);
+            color: #fff; border-radius: 4px; font-family: inherit; font-size: 1rem;
         }
 
-        section h2 {
-            color: var(--accent-color);
-            margin-bottom: 1.5rem;
-            border-bottom: 1px dashed var(--accent-color);
-            padding-bottom: 0.5rem;
+        textarea { resize: vertical; }
+
+        .btn-submit {
+            background: var(--accent-gold); color: #000; padding: 0.8rem 2rem;
+            border: none; border-radius: 4px; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
 
-        input[type="text"], textarea, input[type="file"] {
-            width: 100%;
-            padding: 0.8rem;
-            margin-bottom: 1rem;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            color: #fff;
-            border-radius: 4px;
+        .btn-submit:hover { background: #fff; }
+
+        /* 게시글 리스트 스타일 */
+        .post-item {
+            background: var(--card-bg); border-left: 4px solid var(--accent-gold);
+            padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 4px;
         }
 
-        button {
-            padding: 0.8rem 2rem;
-            background-color: var(--accent-color);
-            color: #000;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background 0.3s ease;
-        }
+        .post-header { display: flex; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid #222; padding-bottom: 10px; }
+        
+        .author-info { font-weight: bold; color: var(--accent-gold); }
 
-        button:hover {
-            background-color: #e5c158;
-        }
-
-        /* 게시글 디자인 업데이트 */
-        .post {
-            background: #1a1a1a;
-            padding: 1.2rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--accent-color);
-            border-radius: 4px;
-            position: relative;
-        }
-
-        .post-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .post-actions button {
-            padding: 0.3rem 0.8rem;
-            font-size: 0.8rem;
-            margin-left: 0.5rem;
-            background-color: #333;
-            color: #fff;
-        }
-
-        .post-actions button:hover {
-            background-color: var(--accent-color);
-            color: #000;
-        }
-
+        /* 핵심: 사용자가 입력한 줄바꿈과 공백을 유지 */
         .post-content {
-            color: #ccc;
-            white-space: pre-wrap; /* 줄바꿈 유지 */
+            white-space: pre-wrap; word-wrap: break-word; color: #ccc; font-size: 1.05rem;
         }
+
+        .action-btns button {
+            background: none; border: 1px solid #444; color: var(--text-dim);
+            padding: 4px 10px; font-size: 0.8rem; cursor: pointer; margin-left: 5px; border-radius: 3px;
+        }
+
+        .action-btns button:hover { border-color: var(--accent-gold); color: #fff; }
+
+        /* 수정 모드용 텍스트 영역 */
+        .edit-textarea {
+            width: 100%; min-height: 120px; background: #222; color: #fff;
+            border: 1px solid var(--accent-gold); padding: 10px; font-family: inherit;
+            margin-bottom: 10px;
+        }
+
+        /* 과제 게시판 */
+        .assignment-zone {
+            border: 2px dashed var(--border-color); padding: 3rem; text-align: center;
+            background: #111; transition: 0.3s;
+        }
+        .assignment-zone:hover { border-color: var(--accent-gold); }
     </style>
 </head>
 <body>
 
-    <!-- [2. HTML: 구조 및 메뉴] -->
+    <!-- 내비게이션 -->
     <nav>
-        <ul class="main-menu">
-            <li><a href="#">Lecture</a>
-                <ul class="sub-menu">
-                    <li><a href="#">Syllabus (강의 계획서)</a></li>
-                    <li><a href="#">Video Aesthetics (영상 미학)</a></li>
-                    <li><a href="#">Psychology (융/프로이트)</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Analysis</a>
-                <ul class="sub-menu">
-                    <li><a href="#">Cinematic Analysis</a></li>
-                    <li><a href="#">AI & Neuro-cinema</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Community</a>
-                <ul class="sub-menu">
-                    <li><a href="#qna">Q&A Board</a></li>
-                    <li><a href="#assignment">Assignment</a></li>
-                </ul>
-            </li>
-        </ul>
+        <div class="nav-container">
+            <ul class="main-menu">
+                <li>Lecture
+                    <ul class="sub-menu">
+                        <li><a href="#">Syllabus (강의 개요)</a></li>
+                        <li><a href="#">Video Aesthetics (미학 이론)</a></li>
+                        <li><a href="#">Psychology (심리 기제)</a></li>
+                    </ul>
+                </li>
+                <li>Analysis
+                    <ul class="sub-menu">
+                        <li><a href="#">Film Analysis (영화 분석)</a></li>
+                        <li><a href="#">AI Neuro-Cinema (신기술)</a></li>
+                    </ul>
+                </li>
+                <li>Community
+                    <ul class="sub-menu">
+                        <li><a href="#qna-section">Q&A Board (질의응답)</a></li>
+                        <li><a href="#assignment-section">Assignment (과제 제출)</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </nav>
 
-    <header class="hero-section">
-        <h1>영상심리학: 시각적 무의식의 탐구</h1>
-        <p>영상 프레임 속에 숨겨진 인간 심리와 융합 기술의 만남</p>
+    <!-- 히어로 섹션 -->
+    <header class="hero">
+        <h1>Video Psychology</h1>
+        <p>영상 속의 무의식과 기술적 융합의 미학</p>
     </header>
 
-    <section id="qna">
-        <h2>학생 질의응답 (Q&A Board)</h2>
-        <form id="qnaForm">
-            <input type="text" id="studentName" placeholder="학번 및 이름 (예: 2026001 홍길동)" required>
-            <textarea id="question" rows="4" placeholder="강의 내용이나 영상 분석에 대한 질문을 남겨주세요." required></textarea>
-            <button type="submit">질문 등록</button>
-        </form>
-        <div id="qnaList">
-            <!-- JavaScript를 통해 게시글이 렌더링됩니다. -->
-        </div>
-    </section>
+    <div class="container">
+        <!-- Q&A 섹션 -->
+        <section id="qna-section">
+            <h2>학생 질의응답 게시판</h2>
+            <div class="board-form">
+                <form id="qnaForm">
+                    <input type="text" id="studentName" placeholder="학번 및 성명" required>
+                    <textarea id="question" rows="5" placeholder="질문 내용을 입력하세요. (Enter를 눌러 줄을 바꿀 수 있습니다)" required></textarea>
+                    <button type="submit" class="btn-submit">질문 등록하기</button>
+                </form>
+            </div>
+            <div id="qnaList">
+                <!-- 게시글이 여기에 렌더링됨 -->
+            </div>
+        </section>
 
-    <section id="assignment">
-        <h2>과제 제출 (Assignment)</h2>
-        <p style="margin-bottom: 1rem; color: #aaa;">AI 생성 영상 포트폴리오 및 심리 분석 리포트(PDF, MP4)를 업로드하세요.</p>
-        <input type="file" id="fileUpload">
-        <button onclick="uploadTask()">과제 업로드</button>
-        <div id="uploadStatus" style="margin-top: 1rem; color: var(--accent-color);"></div>
-    </section>
+        <!-- 과제 게시판 섹션 -->
+        <section id="assignment-section">
+            <h2>과제 제출 게시판</h2>
+            <div class="assignment-zone">
+                <p style="margin-bottom: 20px; color: var(--text-dim);">분석 리포트(PDF) 또는 영상 과제(MP4)를 선택하세요.</p>
+                <input type="file" id="fileTask" style="display: none;">
+                <button class="btn-submit" onclick="document.getElementById('fileTask').click()">파일 선택</button>
+                <button class="btn-submit" style="background: transparent; border: 1px solid var(--accent-gold); color: white;" onclick="alert('과제 제출 시스템 연동이 필요합니다.')">서버 전송</button>
+            </div>
+        </section>
+    </div>
 
-    <!-- [3. JavaScript: 데이터 관리 및 동적 기능] -->
+    <!-- [JavaScript] 동적 기능 구현 -->
     <script>
-        // 1. 게시글 데이터를 관리할 배열 및 ID 카운터
-        let postsData = [];
-        let postIdCounter = 1;
+        // 1. 초기 데이터 (시뮬레이션용 XML 구조 대체 배열)
+        let posts = [
+            { id: 1, author: "관리자", content: "영상심리학 홈페이지에 오신 것을 환영합니다.\n질의응답 게시판에서는 줄바꿈 서식이 그대로 유지됩니다.", date: "2026-05-15" }
+        ];
+        let idCounter = 2;
 
-        // 2. 초기 XML 데이터 시뮬레이션
-        const xmlData = `<?xml version="1.0" encoding="UTF-8"?>
-        <posts>
-            <post>
-                <author>2026101 김학생</author>
-                <content>그림자와 페르소나 개념을 몽타주 기법으로 표현할 때 가장 유의해야 할 점은 무엇인가요?</content>
-            </post>
-            <post>
-                <author>2026102 이학습</author>
-                <content>AI 생성 비디오 툴을 활용할 때 발생하는 렌즈 왜곡 효과를 심리적 불안감 표현에 활용해도 될까요?</content>
-            </post>
-        </posts>`;
-
-        // 3. XML 파싱하여 배열에 담기
-        function loadXMLData() {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(xmlData, "text/xml");
-            const posts = xmlDoc.getElementsByTagName("post");
-
-            for (let i = 0; i < posts.length; i++) {
-                const author = posts[i].getElementsByTagName("author")[0].childNodes[0].nodeValue;
-                const content = posts[i].getElementsByTagName("content")[0].childNodes[0].nodeValue;
-                
-                postsData.push({
-                    id: postIdCounter++,
-                    author: author,
-                    content: content,
-                    isNew: false
-                });
-            }
-            renderPosts();
-        }
-
-        // 4. 게시글 화면에 렌더링하는 함수
+        // 2. 게시글 렌더링 함수
         function renderPosts() {
-            const qnaList = document.getElementById("qnaList");
-            qnaList.innerHTML = ''; // 기존 목록 초기화
+            const listContainer = document.getElementById('qnaList');
+            listContainer.innerHTML = '';
 
-            // 최신 글이 위로 오도록 역순으로 렌더링
-            for (let i = postsData.length - 1; i >= 0; i--) {
-                const post = postsData[i];
-                const newTag = post.isNew ? `<span style="color:var(--accent-color); font-size:0.8rem; margin-left:10px;">[New]</span>` : '';
-                
-                const postHTML = `
-                <div class="post" id="post-${post.id}">
+            posts.slice().reverse().forEach(post => {
+                const postEl = document.createElement('div');
+                postEl.className = 'post-item';
+                postEl.id = `post-${post.id}`;
+
+                postEl.innerHTML = `
                     <div class="post-header">
-                        <div>
-                            <strong>${post.author}</strong> ${newTag}
-                        </div>
-                        <div class="post-actions">
-                            <button onclick="editPost(${post.id})">수정</button>
+                        <span class="author-info">${post.author} <small style="color:#666; font-weight:normal; margin-left:10px;">${post.date}</small></span>
+                        <div class="action-btns" id="actions-${post.id}">
+                            <button onclick="enableEdit(${post.id})">수정</button>
                             <button onclick="deletePost(${post.id})">삭제</button>
                         </div>
                     </div>
                     <div class="post-content" id="content-${post.id}">${post.content}</div>
-                </div>`;
-                qnaList.innerHTML += postHTML;
-            }
+                `;
+                listContainer.appendChild(postEl);
+            });
         }
 
-        // 페이지 로딩 시 실행
-        window.onload = loadXMLData;
-
-        // 5. 새 게시글 등록 (Create)
+        // 3. 질문 등록
         document.getElementById('qnaForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const name = document.getElementById('studentName').value;
-            const text = document.getElementById('question').value;
-            
-            postsData.push({
-                id: postIdCounter++,
-                author: name,
-                content: text,
-                isNew: true
-            });
+            const author = document.getElementById('studentName').value;
+            const content = document.getElementById('question').value;
+            const date = new Date().toISOString().split('T')[0];
 
-            renderPosts(); // 화면 갱신
+            posts.push({ id: idCounter++, author, content, date });
+            renderPosts();
 
-            // 입력창 초기화
-            document.getElementById('studentName').value = '';
-            document.getElementById('question').value = '';
+            this.reset();
         });
 
-        // 6. 게시글 수정 (Update)
-        function editPost(id) {
-            const postIndex = postsData.findIndex(p => p.id === id);
-            if (postIndex === -1) return;
+        // 4. 인라인 수정 모드 활성화 (줄바꿈 유지 핵심)
+        function enableEdit(id) {
+            const contentDiv = document.getElementById(`content-${id}`);
+            const actionsDiv = document.getElementById(`actions-${id}`);
+            const post = posts.find(p => p.id === id);
 
-            const currentContent = postsData[postIndex].content;
-            // prompt 창을 띄워 새로운 내용을 입력받음
-            const newContent = prompt("수정할 내용을 입력하세요:", currentContent);
+            // 본문을 textarea로 교체
+            contentDiv.innerHTML = `<textarea id="editInput-${id}" class="edit-textarea">${post.content}</textarea>`;
             
-            // 입력값이 있고, 취소를 누르지 않았으며, 내용이 변경되었을 경우 적용
-            if (newContent !== null && newContent.trim() !== "" && newContent !== currentContent) {
-                postsData[postIndex].content = newContent;
+            // 버튼을 저장/취소로 교체
+            actionsDiv.innerHTML = `
+                <button onclick="saveEdit(${id})" style="color:var(--accent-gold); border-color:var(--accent-gold);">저장</button>
+                <button onclick="renderPosts()">취소</button>
+            `;
+        }
+
+        // 5. 수정 내용 저장
+        function saveEdit(id) {
+            const newContent = document.getElementById(`editInput-${id}`).value;
+            const postIndex = posts.findIndex(p => p.id === id);
+
+            if (newContent.trim()) {
+                posts[postIndex].content = newContent;
                 renderPosts();
+            } else {
+                alert("내용을 입력해 주세요.");
             }
         }
 
-        // 7. 게시글 삭제 (Delete)
+        // 6. 삭제 기능
         function deletePost(id) {
-            if (confirm("정말로 이 질문을 삭제하시겠습니까?")) {
-                // 해당 ID를 가진 게시글을 배열에서 제외
-                postsData = postsData.filter(p => p.id !== id);
+            if (confirm("정말로 삭제하시겠습니까?")) {
+                posts = posts.filter(p => p.id !== id);
                 renderPosts();
             }
         }
 
-        // 8. 과제 제출 로직
-        function uploadTask() {
-            const fileInput = document.getElementById('fileUpload');
-            const statusDiv = document.getElementById('uploadStatus');
-
-            if(fileInput.files.length === 0) {
-                statusDiv.textContent = "파일을 먼저 선택해주세요.";
-                statusDiv.style.color = "red";
-                return;
-            }
-
-            const fileName = fileInput.files[0].name;
-            statusDiv.textContent = `[시스템] '${fileName}' 파일 업로드 시뮬레이션이 완료되었습니다.`;
-            statusDiv.style.color = "var(--accent-color)";
-        }
+        // 페이지 로드 시 렌더링
+        window.onload = renderPosts;
     </script>
+
 </body>
 </html>
