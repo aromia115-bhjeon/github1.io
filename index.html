@@ -8,7 +8,7 @@
         /* [1. CSS: 스타일링] */
         :root {
             --bg-color: #0a0a0a;
-            --accent-color: #d4af37; /* 시네마틱한 골드 포인트 */
+            --accent-color: #d4af37; /* 시네마틱 골드 */
             --text-color: #e0e0e0;
             --nav-bg: rgba(10, 10, 10, 0.95);
         }
@@ -22,7 +22,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: 'Georgia', serif; /* 인문학적 깊이를 위한 세리프 폰트 */
+            font-family: 'Georgia', serif;
             line-height: 1.6;
         }
 
@@ -36,7 +36,6 @@
             color: var(--accent-color);
         }
 
-        /* 내비게이션 바 설정 */
         nav {
             background: var(--nav-bg);
             border-bottom: 1px solid var(--accent-color);
@@ -63,7 +62,6 @@
             font-weight: bold;
         }
 
-        /* 하위 메뉴 설정 (Hover 시 나타남) */
         .sub-menu {
             display: none;
             position: absolute;
@@ -84,7 +82,6 @@
             padding: 0.5rem 1rem;
         }
 
-        /* 히어로 섹션 (메인 배너) */
         .hero-section {
             height: 60vh;
             display: flex;
@@ -102,7 +99,6 @@
             margin-bottom: 1rem;
         }
 
-        /* 콘텐츠 영역 설정 */
         section {
             max-width: 1000px;
             margin: 4rem auto;
@@ -119,7 +115,6 @@
             padding-bottom: 0.5rem;
         }
 
-        /* 폼 및 게시판 디자인 */
         input[type="text"], textarea, input[type="file"] {
             width: 100%;
             padding: 0.8rem;
@@ -145,11 +140,39 @@
             background-color: #e5c158;
         }
 
+        /* 게시글 디자인 업데이트 */
         .post {
             background: #1a1a1a;
-            padding: 1rem;
+            padding: 1.2rem;
             margin-bottom: 1rem;
             border-left: 4px solid var(--accent-color);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-actions button {
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .post-actions button:hover {
+            background-color: var(--accent-color);
+            color: #000;
+        }
+
+        .post-content {
+            color: #ccc;
+            white-space: pre-wrap; /* 줄바꿈 유지 */
         }
     </style>
 </head>
@@ -193,7 +216,7 @@
             <button type="submit">질문 등록</button>
         </form>
         <div id="qnaList">
-            <!-- 자바스크립트를 통해 XML 데이터와 새 질문이 이곳에 렌더링됩니다. -->
+            <!-- JavaScript를 통해 게시글이 렌더링됩니다. -->
         </div>
     </section>
 
@@ -205,9 +228,13 @@
         <div id="uploadStatus" style="margin-top: 1rem; color: var(--accent-color);"></div>
     </section>
 
-    <!-- [3. JavaScript & XML: 동적 기능] -->
+    <!-- [3. JavaScript: 데이터 관리 및 동적 기능] -->
     <script>
-        // 1. 내장된 XML 데이터 시뮬레이션 (서버의 .xml 파일을 대체함)
+        // 1. 게시글 데이터를 관리할 배열 및 ID 카운터
+        let postsData = [];
+        let postIdCounter = 1;
+
+        // 2. 초기 XML 데이터 시뮬레이션
         const xmlData = `<?xml version="1.0" encoding="UTF-8"?>
         <posts>
             <post>
@@ -220,49 +247,102 @@
             </post>
         </posts>`;
 
-        // 2. XML 파싱 및 화면 출력 함수
+        // 3. XML 파싱하여 배열에 담기
         function loadXMLData() {
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(xmlData, "text/xml");
             const posts = xmlDoc.getElementsByTagName("post");
-            const qnaList = document.getElementById("qnaList");
 
             for (let i = 0; i < posts.length; i++) {
                 const author = posts[i].getElementsByTagName("author")[0].childNodes[0].nodeValue;
                 const content = posts[i].getElementsByTagName("content")[0].childNodes[0].nodeValue;
                 
-                const postHTML = `<div class="post">
-                    <strong>${author}</strong>
-                    <p style="margin-top: 0.5rem; color: #ccc;">${content}</p>
+                postsData.push({
+                    id: postIdCounter++,
+                    author: author,
+                    content: content,
+                    isNew: false
+                });
+            }
+            renderPosts();
+        }
+
+        // 4. 게시글 화면에 렌더링하는 함수
+        function renderPosts() {
+            const qnaList = document.getElementById("qnaList");
+            qnaList.innerHTML = ''; // 기존 목록 초기화
+
+            // 최신 글이 위로 오도록 역순으로 렌더링
+            for (let i = postsData.length - 1; i >= 0; i--) {
+                const post = postsData[i];
+                const newTag = post.isNew ? `<span style="color:var(--accent-color); font-size:0.8rem; margin-left:10px;">[New]</span>` : '';
+                
+                const postHTML = `
+                <div class="post" id="post-${post.id}">
+                    <div class="post-header">
+                        <div>
+                            <strong>${post.author}</strong> ${newTag}
+                        </div>
+                        <div class="post-actions">
+                            <button onclick="editPost(${post.id})">수정</button>
+                            <button onclick="deletePost(${post.id})">삭제</button>
+                        </div>
+                    </div>
+                    <div class="post-content" id="content-${post.id}">${post.content}</div>
                 </div>`;
                 qnaList.innerHTML += postHTML;
             }
         }
 
-        // 페이지 로딩 시 기존 XML 데이터 불러오기
+        // 페이지 로딩 시 실행
         window.onload = loadXMLData;
 
-        // 3. 새로운 Q&A 등록 로직 (동적 추가)
+        // 5. 새 게시글 등록 (Create)
         document.getElementById('qnaForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // 페이지 새로고침 방지
+            e.preventDefault();
             const name = document.getElementById('studentName').value;
             const text = document.getElementById('question').value;
             
-            const postHTML = `<div class="post" style="border-left-color: #fff;">
-                <strong>${name}</strong> <span style="color:var(--accent-color); font-size:0.8rem;">[New]</span>
-                <p style="margin-top: 0.5rem; color: #ccc;">${text}</p>
-            </div>`;
-            
-            // 리스트 최상단에 추가
-            const qnaList = document.getElementById('qnaList');
-            qnaList.insertAdjacentHTML('afterbegin', postHTML);
+            postsData.push({
+                id: postIdCounter++,
+                author: name,
+                content: text,
+                isNew: true
+            });
+
+            renderPosts(); // 화면 갱신
 
             // 입력창 초기화
             document.getElementById('studentName').value = '';
             document.getElementById('question').value = '';
         });
 
-        // 4. 과제 제출 버튼 로직
+        // 6. 게시글 수정 (Update)
+        function editPost(id) {
+            const postIndex = postsData.findIndex(p => p.id === id);
+            if (postIndex === -1) return;
+
+            const currentContent = postsData[postIndex].content;
+            // prompt 창을 띄워 새로운 내용을 입력받음
+            const newContent = prompt("수정할 내용을 입력하세요:", currentContent);
+            
+            // 입력값이 있고, 취소를 누르지 않았으며, 내용이 변경되었을 경우 적용
+            if (newContent !== null && newContent.trim() !== "" && newContent !== currentContent) {
+                postsData[postIndex].content = newContent;
+                renderPosts();
+            }
+        }
+
+        // 7. 게시글 삭제 (Delete)
+        function deletePost(id) {
+            if (confirm("정말로 이 질문을 삭제하시겠습니까?")) {
+                // 해당 ID를 가진 게시글을 배열에서 제외
+                postsData = postsData.filter(p => p.id !== id);
+                renderPosts();
+            }
+        }
+
+        // 8. 과제 제출 로직
         function uploadTask() {
             const fileInput = document.getElementById('fileUpload');
             const statusDiv = document.getElementById('uploadStatus');
@@ -274,7 +354,6 @@
             }
 
             const fileName = fileInput.files[0].name;
-            // 실무에서는 여기서 fetch()를 이용해 서버/GitHub API로 전송합니다.
             statusDiv.textContent = `[시스템] '${fileName}' 파일 업로드 시뮬레이션이 완료되었습니다.`;
             statusDiv.style.color = "var(--accent-color)";
         }
